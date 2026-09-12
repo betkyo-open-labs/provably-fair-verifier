@@ -1,5 +1,7 @@
 # Betkyo provably-fair verifier
 
+![One rounding, not many — why the verifier must match the server bit for bit](docs/cover.webp)
+
 A dependency-free Node script that recomputes a Betkyo round from the revealed server seed, your client seed, the nonce and the cursor — the same inputs and the same constructions the site's browser verifier uses.
 
 ```bash
@@ -10,6 +12,25 @@ node verify.mjs roulette <serverSeed> <clientSeed> <nonce>   # pocket 0–36
 node verify.mjs sicbo    <serverSeed> <clientSeed> <nonce>   # three dice
 node verify.mjs koban    <serverSeed> <clientSeed> <nonce> <flips>   # faces, 0 = omote, 1 = ura
 ```
+
+## Worked example
+
+A test seed, so you can check the script against itself before you check it against a round:
+
+```bash
+$ node verify.mjs commit 0000000000000000000000000000000000000000000000000000000000000001
+c386d8e8d07342f2e39e189c8e6c57bb205bb373fe4e3a6f69404a8bb767b417
+$ node verify.mjs limbo    0000000000000000000000000000000000000000000000000000000000000001 betkyo 1
+186            # ×1.86
+$ node verify.mjs roulette 0000000000000000000000000000000000000000000000000000000000000001 betkyo 1
+17             # pocket 17
+$ node verify.mjs sicbo    0000000000000000000000000000000000000000000000000000000000000001 betkyo 1
+[3,2,1]        # three dice, total 6
+$ node verify.mjs koban    0000000000000000000000000000000000000000000000000000000000000001 betkyo 1 5
+[0,0,0,1,0]    # five flips, 0 = omote, 1 = ura
+```
+
+On a real round: take the revealed server seed from the fairness panel after rotating your seed pair, the client seed and nonce from the bet record, and compare `commit` with the fingerprint you were shown before play and the game command with the result you were paid on.
 
 ## How a round is derived
 
@@ -26,4 +47,4 @@ This script covers the seed-pair originals whose mapping is a single arithmetic 
 
 Betkyo is a crypto casino with provably fair original games. 18+. Verification shows the randomness was committed and honest; it does not change the house edge, which every game's article states.
 
-Licence: MIT.
+Related: [odds-data](https://github.com/betkyo-open-labs/odds-data) (the paytables), [odds-derivations](https://github.com/betkyo-open-labs/odds-derivations) (the return figures). Licence: MIT.
