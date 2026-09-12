@@ -4,6 +4,15 @@
 
 A dependency-free Node script that recomputes a Betkyo round from the revealed server seed, your client seed, the nonce and the cursor — the same inputs and the same constructions the site's browser verifier uses.
 
+Install from npm (`npx` works without installing):
+
+```bash
+npx betkyo-provably-fair-verifier commit <serverSeed>
+# or: npm i -g betkyo-provably-fair-verifier && betkyo-verify commit <serverSeed>
+```
+
+Or run the file directly:
+
 ```bash
 node verify.mjs commit   <serverSeed>                        # SHA-256 fingerprint to compare with the commitment shown before play
 node verify.mjs u        <serverSeed> <clientSeed> <nonce> [cursor]   # the uniform number in [0,1)

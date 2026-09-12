@@ -1,0 +1,18 @@
+{
+  "name": "betkyo-provably-fair-verifier",
+  "version": "1.0.0",
+  "description": "Recompute a Betkyo provably-fair casino round from the revealed server seed, your client seed, the nonce and the cursor — the same HMAC-SHA256 and one-rounding byte-to-number construction the site's browser verifier uses. No dependencies.",
+  "type": "module",
+  "main": "./verify.mjs",
+  "exports": "./verify.mjs",
+  "bin": { "betkyo-verify": "./verify.mjs" },
+  "files": ["verify.mjs", "README.md", "LICENSE"],
+  "engines": { "node": ">=18" },
+  "keywords": ["provably-fair", "casino", "hmac-sha256", "verifier", "betkyo", "limbo", "roulette", "sic-bo", "random", "fairness"],
+  "author": "Betkyo Research <dev@betkyo.com>",
+  "license": "MIT",
+  "homepage": "https://betkyo.com/en/blog/one-rounding-not-many-why-the-verifier-matches-the-server-bit-for-bit/",
+  "repository": { "type": "git", "url": "git+https://github.com/betkyo-open-labs/provably-fair-verifier.git" },
+  "bugs": { "url": "https://github.com/betkyo-open-labs/provably-fair-verifier/issues" },
+  "publishConfig": { "access": "public" }
+}

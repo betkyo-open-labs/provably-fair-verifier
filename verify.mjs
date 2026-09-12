@@ -13,6 +13,8 @@
 //   node verify.mjs koban   <serverSeed> <clientSeed> <nonce> <flips> → faces (0 = omote, 1 = ura)
 //   node verify.mjs dice6   <serverSeed> <clientSeed> <nonce> [cursor] → a 1..6 die at that cursor
 import { createHmac, createHash } from 'node:crypto';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 export const sha256Hex = (s) => createHash('sha256').update(s, 'utf8').digest('hex');
 export const hmac = (serverSeed, clientSeed, nonce, cursor) =>
@@ -36,7 +38,8 @@ export const games = {
     dice6: (s, c, n, cur = 0) => Math.min(Math.floor(uAt(s, c, n, +cur) * 6), 5) + 1,
 };
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+const isMain = (() => { try { return process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url); } catch { return false; } })();
+if (isMain) {
     const [cmd, ...a] = process.argv.slice(2);
     if (cmd === 'commit') console.log(sha256Hex(a[0]));
     else if (cmd === 'u') console.log(uAt(a[0], a[1], +a[2], +(a[3] ?? 0)));
