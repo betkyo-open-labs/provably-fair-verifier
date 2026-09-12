@@ -1,0 +1,27 @@
+name: Publish to npm
+
+# Publishes the package with npm trusted publishing (OIDC, no token stored in
+# the repository). Configure the trusted publisher on npmjs.com under the
+# package's Settings → Trusted Publisher: organisation betkyo-open-labs,
+# repository provably-fair-verifier, workflow publish.yml.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@latest
+      - run: node verify.mjs limbo 0000000000000000000000000000000000000000000000000000000000000001 betkyo 1 | grep -qx 186
+      - run: npm publish --provenance --access public
