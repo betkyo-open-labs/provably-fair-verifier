@@ -1,7 +1,7 @@
 {
   "name": "betkyo-provably-fair-verifier",
   "version": "1.0.0",
-  "description": "Recompute a Betkyo provably-fair casino round from the revealed server seed, your client seed, the nonce and the cursor — the same HMAC-SHA256 and one-rounding byte-to-number construction the site's browser verifier uses. No dependencies.",
+  "description": "Recompute a Betkyo provably-fair casino round from its server seed, client seed, nonce and cursor — the same HMAC-SHA256 and one-rounding byte-to-number construction the site's browser verifier uses. No dependencies.",
   "type": "module",
   "main": "./verify.mjs",
   "exports": "./verify.mjs",
